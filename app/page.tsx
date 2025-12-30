@@ -49,7 +49,7 @@ const projects: Project[] = [
     title: 'Student Management System',
     description: 'Comprehensive system with attendance reports, admin dashboard, dark/light theme toggle, and notification system.',
     technologies: ['ASP.NET', 'Razor Pages', 'Entity Framework', 'SQL Server'],
-    githubUrl: 'https://github.com/maliksayar',
+    githubUrl: 'https://github.com/maliksayar/StudentManagement',
     image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop'
   },
   {
@@ -57,7 +57,7 @@ const projects: Project[] = [
     title: 'HealthCart',
     description: 'E-commerce platform for medicines with online doctor appointment feature. Focused on user-friendly navigation and secure data handling.',
     technologies: ['ASP.NET', 'C#', 'SQL Server', 'Bootstrap'],
-    githubUrl: 'https://github.com/maliksayar',
+    githubUrl: 'https://github.com/maliksayar/HealthCart',
     image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop'
   },
   {
@@ -65,7 +65,7 @@ const projects: Project[] = [
     title: 'Daily Expenses Tracker',
     description: 'Clean, aesthetic expense tracker with local storage support. Helps users track daily expenses efficiently.',
     technologies: ['ASP.NET MVC', 'Bootstrap', 'Tailwind CSS', 'JavaScript'],
-    githubUrl: 'https://github.com/maliksayar',
+    githubUrl: 'https://github.com/maliksayar/DailyExpensesTracker',
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop'
   }
 ];
@@ -159,16 +159,36 @@ export default function Portfolio() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    alert('Message sent successfully! I will get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
-  };
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("https://formspree.io/f/xzdbqdze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (response.ok) {
+      alert("Message sent successfully! I will get back to you soon.");
+      console.log("Form submitted:", formData);
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      alert("Failed to send message. Try again!");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong. Please try again later.");
+  }
+};
+
 
   const handleDownloadResume = () => {
     // This would link to your actual resume PDF
-   
-    window.open('/resume.pdf', '_blank');
+  //  href="https://drive.google.com/file/d/1QhEqTrUXjeSoG6Xk8jsmpXgN6yS1mt5m/view?usp=drivesdk"
+    window.open('https://drive.google.com/file/d/1QhEqTrUXjeSoG6Xk8jsmpXgN6yS1mt5m/view?usp=drivesdk', '_blank');
   };
 
   const navItems = ['home', 'about', 'education', 'experience', 'skills', 'projects', 'contact'];
@@ -270,7 +290,7 @@ export default function Portfolio() {
             MCA Student building scalable web applications with modern frameworks
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Button onClick={() => scrollToSection('projects')} size="lg" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90">
+            <Button onClick={() => scrollToSection('projects')} size="lg" variant="outline" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90">
               View My Work
             </Button>
             <Button onClick={handleDownloadResume} size="lg" variant="outline" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90">
@@ -348,18 +368,18 @@ export default function Portfolio() {
                 className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl hover:scale-102`}
               >
                 <CardHeader>
-                  <CardTitle className="text-xl">{edu.degree}</CardTitle>
-                  <CardDescription className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-base`}>
+                  <CardTitle className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} text-base text-xl `}>{edu.degree}</CardTitle>
+                  <CardDescription className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-base `}>
                     {edu.institution}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-4">
-                    <Badge variant="outline" className={theme === 'dark' ? 'border-gray-600' : ''}>
+                    <Badge variant="outline" className={theme === 'dark' ? 'text-gray-300'  : ''}>
                       {edu.period}
                     </Badge>
                     {edu.grade && (
-                      <Badge variant="secondary" className={theme === 'dark' ? 'bg-gray-700' : ''}>
+                      <Badge variant="secondary" className={theme === 'dark' ? 'bg-gray-500' : ''}>
                         {edu.grade}
                       </Badge>
                     )}
@@ -385,7 +405,7 @@ export default function Portfolio() {
                 className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl`}
               >
                 <CardHeader>
-                  <CardTitle className="text-2xl">{exp.role}</CardTitle>
+                  <CardTitle className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} text-base text-2xl `}>{exp.role}</CardTitle>
                   <CardDescription className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-base`}>
                     {exp.company} | {exp.duration}
                   </CardDescription>
@@ -422,7 +442,7 @@ export default function Portfolio() {
                 className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl`}
               >
                 <CardHeader>
-                  <CardTitle className="text-xl">{label}</CardTitle>
+                  <CardTitle className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} text-base text-xl `}>{label}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -473,7 +493,7 @@ export default function Portfolio() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <CardHeader>
-                  <CardTitle>{project.title}</CardTitle>
+                  <CardTitle className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} text-base text-2xl `}>{project.title}</CardTitle>
                   <CardDescription className={theme === 'dark' ? 'text-gray-400' : ''}>
                     {project.description}
                   </CardDescription>
@@ -481,7 +501,7 @@ export default function Portfolio() {
                 <CardContent>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map(tech => (
-                      <Badge key={tech} variant="outline" className={theme === 'dark' ? 'border-gray-600' : ''}>
+                      <Badge key={tech} variant="outline" className={theme === 'dark' ? 'text-gray-300': ''}>
                         {tech}
                       </Badge>
                     ))}
@@ -526,42 +546,42 @@ export default function Portfolio() {
             <CardContent className="pt-6">
               <div className="space-y-6">
                 <div>
-                  <label className="block mb-2 font-medium">Name</label>
+                  <label className="block mb-2 font-medium text-gray-500">Name</label>
                   <input 
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     className={`w-full px-4 py-2 rounded-lg border ${
                       theme === 'dark' 
-                        ? 'bg-gray-700 border-gray-600 focus:border-blue-500' 
+                        ? 'bg-gray-500 border-gray-600 focus:border-blue-500' 
                         : 'bg-white border-gray-300 focus:border-blue-500'
                     } outline-none transition-colors`}
                     placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 font-medium">Email</label>
+                  <label className="block mb-2 font-medium text-gray-500">Email</label>
                   <input 
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     className={`w-full px-4 py-2 rounded-lg border ${
                       theme === 'dark' 
-                        ? 'bg-gray-700 border-gray-600 focus:border-blue-500' 
+                        ? 'bg-gray-500 border-gray-600 focus:border-blue-500' 
                         : 'bg-white border-gray-300 focus:border-blue-500'
                     } outline-none transition-colors`}
                     placeholder="your.email@example.com"
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 font-medium">Message</label>
+                  <label className="block mb-2 font-medium text-gray-500">Message</label>
                   <textarea 
                     rows={5}
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
                     className={`w-full px-4 py-2 rounded-lg border ${
                       theme === 'dark' 
-                        ? 'bg-gray-700 border-gray-600 focus:border-blue-500' 
+                        ? 'bg-gray-500 border-gray-600 focus:border-blue-500' 
                         : 'bg-white border-gray-300 focus:border-blue-500'
                     } outline-none transition-colors resize-none`}
                     placeholder="Your message..."
@@ -580,11 +600,11 @@ export default function Portfolio() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className={`text-sm font-medium mb-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Email</p>
-                    <p className="font-medium">maliksyr999@gmail.com</p>
+                    <p className="font-medium text-gray-500">maliksyr999@gmail.com</p>
                   </div>
                   <div>
                     <p className={`text-sm font-medium mb-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Phone</p>
-                    <p className="font-medium">+91 6006125886</p>
+                    <p className="font-medium text-gray-500">+91 6006125886</p>
                   </div>
                 </div>
               </div>
