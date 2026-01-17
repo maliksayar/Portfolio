@@ -65,7 +65,7 @@ const projects: Project[] = [
     title: 'Daily Expenses Tracker',
     description: 'Clean, aesthetic expense tracker with local storage support. Helps users track daily expenses efficiently.',
     technologies: ['ASP.NET MVC', 'Bootstrap', 'Tailwind CSS', 'JavaScript'],
-    githubUrl: 'https://github.com/maliksayar/DailyExpensesTracker',
+    githubUrl: 'https://daily-expenses-tracker-beige.vercel.app',
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop'
   }
 ];
