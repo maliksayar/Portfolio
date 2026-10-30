@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X, Github, Linkedin, Mail, ExternalLink, ChevronDown, Send, Download, Briefcase, GraduationCap, Code } from 'lucide-react';
+import { Moon, Sun, Menu, X, Github, Linkedin, Mail, ExternalLink, ChevronDown, Send, Download, Briefcase, GraduationCap, Code, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -18,8 +18,13 @@ interface Project {
 
 interface Skill {
   name: string;
-  category: 'languages' | 'frameworks' | 'databases' | 'tools';
+  category: 'languages' | 'backend' | 'frontend' | 'databases' | 'tools';
   proficiency: number;
+}
+
+interface SpokenLanguage {
+  name: string;
+  proficiency: string;
 }
 
 interface Education {
@@ -46,58 +51,103 @@ interface ContactForm {
 const projects: Project[] = [
   {
     id: '1',
-    title: 'Student Management System',
-    description: 'Comprehensive system with attendance reports, admin dashboard, dark/light theme toggle, and notification system.',
-    technologies: ['ASP.NET', 'Razor Pages', 'Entity Framework', 'SQL Server'],
-    githubUrl: 'https://github.com/maliksayar/StudentManagement',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop'
+    title: 'HealthCart',
+    description: 'Developed an e-commerce platform for medicines with integrated ML-based Heart Disease and Diabetes Prediction modules. Built the backend with ASP.NET MVC and Entity Framework, with a responsive front end using Bootstrap, HTML5, and CSS3.',
+    technologies: ['ASP.NET MVC', 'C#', 'Entity Framework', 'Bootstrap', 'HTML5', 'CSS3', 'SQL Server', 'Machine Learning'],
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop',
+    liveUrl: 'https://healthcart.runasp.net/'
   },
   {
     id: '2',
-    title: 'HealthCart',
-    description: 'E-commerce platform for medicines with online doctor appointment feature. Focused on user-friendly navigation and secure data handling.',
-    technologies: ['ASP.NET', 'C#', 'SQL Server', 'Bootstrap'],
-    githubUrl: 'https://github.com/maliksayar/HealthCart',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop'
+    title: 'Daily Expenses Tracker',
+    description: 'Built an expense-tracking web app using Next.js with Supabase for data storage. Delivered a clean, aesthetic front end combining Bootstrap and Tailwind CSS to help users track daily expenses simply and efficiently.',
+    technologies: ['Next.js', 'React.js', 'Supabase', 'Tailwind CSS', 'Bootstrap', 'JavaScript'],
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop',
+    liveUrl: 'https://daily-expenses-tracker-beige.vercel.app'
   },
   {
     id: '3',
-    title: 'Daily Expenses Tracker',
-    description: 'Clean, aesthetic expense tracker with local storage support. Helps users track daily expenses efficiently.',
-    technologies: ['ASP.NET MVC', 'Bootstrap', 'Tailwind CSS', 'JavaScript'],
-    githubUrl: 'https://daily-expenses-tracker-beige.vercel.app',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop'
+    title: 'Talexa',
+    description: 'Built as part of the development team at ILS; Talexa is a job portal enabling employers to post openings and candidates to browse and apply for jobs.',
+    technologies: ['Next.js', 'React.js', 'REST API', 'Node.js', 'Tailwind CSS'],
+    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop',
+    liveUrl: 'https://talexa.ilsimperiatech.com'
+  },
+  {
+    id: '4',
+    title: 'Adzura',
+    description: 'Contributed to Adzura, a leads management platform built to help businesses track, assign, and manage sales leads end-to-end.',
+    technologies: ['Next.js', 'React.js', 'Node.js', 'REST API', 'MongoDB'],
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+    liveUrl: 'https://core.ilsimperia.com'
+  },
+  {
+    id: '5',
+    title: 'Plasma',
+    description: 'Worked on Plasma, a student management platform for handling student records and academic administration.',
+    technologies: ['Next.js', 'React.js', 'REST API', 'SQL Server', 'Entity Framework'],
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=600&fit=crop',
+    liveUrl: 'https://core.ilsimperia.com'
+  },
+  {
+    id: '6',
+    title: 'Striker',
+    description: 'Contributed to Striker, an online exam portal supporting test creation and delivery for students.',
+    technologies: ['Next.js', 'React.js', 'Node.js', 'Express.js', 'REST API'],
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop',
+    liveUrl: 'https://core.ilsimperia.com'
   }
 ];
 
 const skills: Skill[] = [
+  // Languages
   { name: 'C#', category: 'languages', proficiency: 85 },
-  { name: 'JavaScript', category: 'languages', proficiency: 80 },
-  { name: 'SQL', category: 'languages', proficiency: 75 },
+  { name: 'JavaScript', category: 'languages', proficiency: 85 },
+  { name: 'TypeScript', category: 'languages', proficiency: 80 },
+  { name: 'SQL', category: 'languages', proficiency: 80 },
   { name: 'HTML5', category: 'languages', proficiency: 90 },
   { name: 'CSS3', category: 'languages', proficiency: 85 },
-  { name: 'ASP.NET', category: 'frameworks', proficiency: 85 },
-  { name: 'MVC', category: 'frameworks', proficiency: 80 },
-  { name: 'Razor Pages', category: 'frameworks', proficiency: 80 },
-  { name: 'Web API', category: 'frameworks', proficiency: 75 },
-  { name: 'React.js', category: 'frameworks', proficiency: 80 },
-  { name: 'Redux', category: 'frameworks', proficiency: 70 },
-  { name: 'Tailwind CSS', category: 'frameworks', proficiency: 85 },
-  { name: 'Bootstrap', category: 'frameworks', proficiency: 85 },
-  { name: 'SQL Server', category: 'databases', proficiency: 80 },
-  { name: 'Entity Framework', category: 'databases', proficiency: 75 },
-  { name: 'Git', category: 'tools', proficiency: 80 },
-  { name: 'GitHub', category: 'tools', proficiency: 80 },
+
+  // Back-End
+  { name: 'ASP.NET', category: 'backend', proficiency: 85 },
+  { name: 'ASP.NET MVC', category: 'backend', proficiency: 85 },
+  { name: 'Web API', category: 'backend', proficiency: 80 },
+  { name: 'Entity Framework', category: 'backend', proficiency: 80 },
+  { name: 'Node.js', category: 'backend', proficiency: 80 },
+  { name: 'Express.js', category: 'backend', proficiency: 75 },
+
+  // Front-End
+  { name: 'React.js', category: 'frontend', proficiency: 85 },
+  { name: 'Next.js', category: 'frontend', proficiency: 85 },
+  { name: 'Redux', category: 'frontend', proficiency: 75 },
+  { name: 'Tailwind CSS', category: 'frontend', proficiency: 88 },
+  { name: 'Bootstrap', category: 'frontend', proficiency: 85 },
+
+  // Databases
+  { name: 'SQL Server', category: 'databases', proficiency: 82 },
+  { name: 'MongoDB', category: 'databases', proficiency: 78 },
+  { name: 'Supabase', category: 'databases', proficiency: 80 },
+
+  // Tools
+  { name: 'Git', category: 'tools', proficiency: 85 },
+  { name: 'GitHub', category: 'tools', proficiency: 85 },
+  { name: 'Visual Studio', category: 'tools', proficiency: 85 },
   { name: 'VS Code', category: 'tools', proficiency: 90 },
-  { name: 'Visual Studio', category: 'tools', proficiency: 85 }
+  { name: 'Postman', category: 'tools', proficiency: 82 }
+];
+
+const spokenLanguages: SpokenLanguage[] = [
+  { name: 'English', proficiency: 'Written & Spoken' },
+  { name: 'Urdu', proficiency: 'Written & Spoken' },
+  { name: 'Kashmiri', proficiency: 'Written & Spoken' }
 ];
 
 const education: Education[] = [
   {
     degree: 'Master of Computer Applications (MCA)',
     institution: 'Jamia Hamdard University, New Delhi',
-    period: '2024 - Present',
-    grade: 'In Progress'
+    period: '2024 - 2026',
+    grade: 'CGPA: 7.74'
   },
   {
     degree: 'Bachelor of Computer Applications (BCA)',
@@ -116,13 +166,12 @@ const education: Education[] = [
 const experience: Experience[] = [
   {
     role: 'Student Developer',
-    company: 'ILS',
+    company: 'ILS, Srinagar',
     duration: '1 Year',
     achievements: [
-      'Worked on multiple academic and personal projects',
-      'Gained hands-on experience in modern web and mobile development frameworks',
-      'Applied C#, ASP.NET, React.js, and SQL in real-world project scenarios',
-      'Developed scalable and responsive applications'
+      'Worked on live client projects — Talexa (job portal), Adzura (leads management), Plasma (student management), and Striker (exam portal) — built with Next.js and React.',
+      'Gained hands-on experience across both Microsoft and JavaScript-based web development frameworks, along with REST API integration.',
+      'Applied C#, ASP.NET, React.js, Next.js, Node.js, and SQL in real-world academic and freelance project scenarios.'
     ]
   }
 ];
@@ -159,70 +208,68 @@ export default function Portfolio() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
- const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  try {
-    const response = await fetch("https://formspree.io/f/xzdbqdze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    });
+    try {
+      const response = await fetch("https://formspree.io/f/xzdbqdze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
 
-    if (response.ok) {
-      alert("Message sent successfully! I will get back to you soon.");
-      console.log("Form submitted:", formData);
-      setFormData({ name: "", email: "", message: "" });
-    } else {
-      alert("Failed to send message. Try again!");
+      if (response.ok) {
+        alert("Message sent successfully! I will get back to you soon.");
+        console.log("Form submitted:", formData);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert("Failed to send message. Try again!");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again later.");
     }
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong. Please try again later.");
-  }
-};
+  };
 
 
   const handleDownloadResume = () => {
     // This would link to your actual resume PDF
-  //  href="https://drive.google.com/file/d/1QhEqTrUXjeSoG6Xk8jsmpXgN6yS1mt5m/view?usp=drivesdk"
+    //  href="https://drive.google.com/file/d/1QhEqTrUXjeSoG6Xk8jsmpXgN6yS1mt5m/view?usp=drivesdk"
     window.open('https://drive.google.com/file/d/1QhEqTrUXjeSoG6Xk8jsmpXgN6yS1mt5m/view?usp=drivesdk', '_blank');
   };
 
   const navItems = ['home', 'about', 'education', 'experience', 'skills', 'projects', 'contact'];
 
-  const categoryLabels = {
+  const categoryLabels: Record<Skill['category'], string> = {
     languages: 'Languages',
-    frameworks: 'Frameworks & Libraries',
-    databases: 'Databases',
-    tools: 'Tools'
+    backend: 'Back-End Development',
+    frontend: 'Front-End Development',
+    databases: 'Databases & Storage',
+    tools: 'Tools & Platforms'
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'
-    }`}>
+    <div className={`min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'
+      }`}>
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        theme === 'dark' ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'
-      } backdrop-blur-sm border-b`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${theme === 'dark' ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'
+        } backdrop-blur-sm border-b`}>
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
               Sayar Malik
             </h1>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6">
               {navItems.map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item)}
-                  className={`capitalize hover:text-blue-500 transition-colors text-sm ${
-                    activeSection === item ? 'text-blue-500' : ''
-                  }`}
+                  className={`capitalize hover:text-blue-500 transition-colors text-sm ${activeSection === item ? 'text-blue-500' : ''
+                    }`}
                 >
                   {item}
                 </button>
@@ -262,14 +309,12 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20">
-        <div className={`text-center transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
+        <div className={`text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
           <div className="mb-6">
             <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-500 p-1 mb-6 animate-pulse">
-              <div className={`w-full h-full rounded-full ${
-                theme === 'dark' ? 'bg-gray-900' : 'bg-white'
-              } flex items-center justify-center text-4xl font-bold`}>
+              <div className={`w-full h-full rounded-full ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'
+                } flex items-center justify-center text-4xl font-bold`}>
                 SM
               </div>
             </div>
@@ -279,15 +324,13 @@ export default function Portfolio() {
               Sayar Ahmad Malik
             </span>
           </h1>
-          <p className={`text-xl md:text-2xl mb-4 ${
-            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            Full-Stack Developer | ASP.NET & React.js Specialist
+          <p className={`text-xl md:text-2xl mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+            }`}>
+            Full-Stack Developer | Microsoft & JavaScript Ecosystems
           </p>
-          <p className={`text-lg mb-8 max-w-2xl mx-auto ${
-            theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
-          }`}>
-            MCA Student building scalable web applications with modern frameworks
+          <p className={`text-lg mb-8 max-w-2xl mx-auto ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+            }`}>
+            MCA graduate skilled in designing complete solutions end-to-end — from relational and NoSQL databases to responsive, user-friendly front ends.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Button onClick={() => scrollToSection('projects')} size="lg" variant="outline" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90">
@@ -324,28 +367,47 @@ export default function Portfolio() {
           <h2 className="text-4xl font-bold mb-8 text-center">About Me</h2>
           <Card className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl`}>
             <CardContent className="pt-6">
-              <p className={`text-lg leading-relaxed mb-4 ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-              }`}>
-                I'm a motivated MCA student and aspiring Full-Stack Developer with hands-on experience in building scalable web
-                and mobile applications using ASP.NET, C#, React.js, and modern UI frameworks.
+              <p className={`text-lg leading-relaxed mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                I'm a motivated MCA degree holder and aspiring Full-Stack Developer with hands-on experience across both the Microsoft and JavaScript ecosystems, including C#, ASP.NET MVC, Web API, React.js, Next.js, and Node.js.
               </p>
-              <p className={`text-lg leading-relaxed mb-4 ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-              }`}>
-                I specialize in creating professional, responsive, and user-friendly solutions through academic, personal, and freelance projects.
-                My expertise includes developing comprehensive systems with features like authentication, dashboards, and real-time notifications.
+              <p className={`text-lg leading-relaxed mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                I specialize in designing complete solutions end-to-end — from relational (SQL Server) and NoSQL (MongoDB, Supabase) databases through to responsive, user-friendly front ends. Passionate about writing clean, maintainable code and eager to contribute versatile full-stack skills to a growing development team.
               </p>
-              <p className={`text-lg leading-relaxed ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-              }`}>
-                I'm seeking opportunities to apply my technical expertise, problem-solving skills, and creativity to contribute to
-                innovative software development teams. I believe in continuous learning and staying updated with the latest technologies.
+              <p className={`text-lg leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                During my tenure as a Student Developer at ILS, Srinagar, I contributed to live client projects including job portals, leads management, student administration, and online exam platforms with modern REST API integrations.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Badge className="bg-blue-500 hover:bg-blue-600">Web Development</Badge>
-                <Badge className="bg-purple-500 hover:bg-purple-600">Android Development</Badge>
-                <Badge className="bg-green-500 hover:bg-green-600">Full-Stack</Badge>
+                <Badge className="bg-blue-500 hover:bg-blue-600">Full-Stack Development</Badge>
+                <Badge className="bg-indigo-500 hover:bg-indigo-600">ASP.NET MVC & C#</Badge>
+                <Badge className="bg-cyan-500 hover:bg-cyan-600">React.js & Next.js</Badge>
+                <Badge className="bg-emerald-500 hover:bg-emerald-600">Node.js & Express</Badge>
+                <Badge className="bg-purple-500 hover:bg-purple-600">SQL Server & MongoDB</Badge>
+                <Badge className="bg-rose-500 hover:bg-rose-600">REST API Integration</Badge>
+              </div>
+
+              {/* Languages Known */}
+              <div className="mt-8 pt-6 border-t border-gray-700/50">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-blue-500" />
+                  Languages Known
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {spokenLanguages.map((lang) => (
+                    <div
+                      key={lang.name}
+                      className={`p-4 rounded-lg border transition-all ${theme === 'dark' ? 'bg-gray-900/60 border-gray-700' : 'bg-gray-50 border-gray-200'
+                        }`}
+                    >
+                      <p className="font-semibold text-base">{lang.name}</p>
+                      <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {lang.proficiency}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -353,9 +415,8 @@ export default function Portfolio() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className={`py-20 px-6 ${
-        theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-100'
-      }`}>
+      <section id="education" className={`py-20 px-6 ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-100'
+        }`}>
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-4xl font-bold mb-12 text-center flex items-center justify-center gap-3">
             <GraduationCap className="h-10 w-10" />
@@ -363,7 +424,7 @@ export default function Portfolio() {
           </h2>
           <div className="space-y-6">
             {education.map((edu, idx) => (
-              <Card 
+              <Card
                 key={idx}
                 className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl hover:scale-102`}
               >
@@ -375,7 +436,7 @@ export default function Portfolio() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-4">
-                    <Badge variant="outline" className={theme === 'dark' ? 'text-gray-300'  : ''}>
+                    <Badge variant="outline" className={theme === 'dark' ? 'text-gray-300' : ''}>
                       {edu.period}
                     </Badge>
                     {edu.grade && (
@@ -400,7 +461,7 @@ export default function Portfolio() {
           </h2>
           <div className="space-y-6">
             {experience.map((exp, idx) => (
-              <Card 
+              <Card
                 key={idx}
                 className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl`}
               >
@@ -427,19 +488,19 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className={`py-20 px-6 ${
-        theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-100'
-      }`}>
+      <section id="skills" className={`py-20 px-6 ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-100'
+        }`}>
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold mb-12 text-center flex items-center justify-center gap-3">
             <Code className="h-10 w-10" />
             Skills & Proficiency
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Object.entries(categoryLabels).map(([category, label]) => (
-              <Card 
+              <Card
                 key={category}
-                className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl`}
+                className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} ${category === 'tools' ? 'md:col-span-2 lg:col-span-1' : ''
+                  } transition-all duration-300 hover:shadow-xl`}
               >
                 <CardHeader>
                   <CardTitle className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} text-base text-xl `}>{label}</CardTitle>
@@ -459,7 +520,7 @@ export default function Portfolio() {
                             </span>
                           </div>
                           <div className={`h-2 rounded-full ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'}`}>
-                            <div 
+                            <div
                               className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-1000"
                               style={{ width: `${skill.proficiency}%` }}
                             />
@@ -480,13 +541,13 @@ export default function Portfolio() {
           <h2 className="text-4xl font-bold mb-12 text-center">Featured Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
-              <Card 
+              <Card
                 key={project.id}
                 className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden group`}
               >
                 <div className="relative overflow-hidden h-48">
-                  <img 
-                    src={project.image} 
+                  <img
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
@@ -501,26 +562,26 @@ export default function Portfolio() {
                 <CardContent>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map(tech => (
-                      <Badge key={tech} variant="outline" className={theme === 'dark' ? 'text-gray-300': ''}>
+                      <Badge key={tech} variant="outline" className={theme === 'dark' ? 'text-gray-300' : ''}>
                         {tech}
                       </Badge>
                     ))}
                   </div>
                   <div className="flex gap-2">
                     {project.githubUrl && (
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="flex-1"
                         onClick={() => window.open(project.githubUrl, '_blank')}
                       >
                         <Github className="h-4 w-4 mr-2" />
-                        Code
+                        Open
                       </Button>
                     )}
                     {project.liveUrl && (
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         className="flex-1 bg-gradient-to-r from-blue-500 to-purple-500"
                         onClick={() => window.open(project.liveUrl, '_blank')}
                       >
@@ -537,9 +598,8 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className={`py-20 px-6 ${
-        theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-100'
-      }`}>
+      <section id="contact" className={`py-20 px-6 ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-100'
+        }`}>
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-4xl font-bold mb-12 text-center">Get In Touch</h2>
           <Card className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''} transition-all duration-300 hover:shadow-xl`}>
@@ -547,49 +607,46 @@ export default function Portfolio() {
               <div className="space-y-6">
                 <div>
                   <label className="block mb-2 font-medium text-gray-500">Name</label>
-                  <input 
+                  <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className={`w-full px-4 py-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-gray-500 border-gray-600 focus:border-blue-500' 
-                        : 'bg-white border-gray-300 focus:border-blue-500'
-                    } outline-none transition-colors`}
+                    className={`w-full px-4 py-2 rounded-lg border ${theme === 'dark'
+                      ? 'bg-gray-500 border-gray-600 focus:border-blue-500'
+                      : 'bg-white border-gray-300 focus:border-blue-500'
+                      } outline-none transition-colors`}
                     placeholder="Your name"
                   />
                 </div>
                 <div>
                   <label className="block mb-2 font-medium text-gray-500">Email</label>
-                  <input 
+                  <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className={`w-full px-4 py-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-gray-500 border-gray-600 focus:border-blue-500' 
-                        : 'bg-white border-gray-300 focus:border-blue-500'
-                    } outline-none transition-colors`}
+                    className={`w-full px-4 py-2 rounded-lg border ${theme === 'dark'
+                      ? 'bg-gray-500 border-gray-600 focus:border-blue-500'
+                      : 'bg-white border-gray-300 focus:border-blue-500'
+                      } outline-none transition-colors`}
                     placeholder="your.email@example.com"
                   />
                 </div>
                 <div>
                   <label className="block mb-2 font-medium text-gray-500">Message</label>
-                  <textarea 
+                  <textarea
                     rows={5}
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    className={`w-full px-4 py-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-gray-500 border-gray-600 focus:border-blue-500' 
-                        : 'bg-white border-gray-300 focus:border-blue-500'
-                    } outline-none transition-colors resize-none`}
+                    className={`w-full px-4 py-2 rounded-lg border ${theme === 'dark'
+                      ? 'bg-gray-500 border-gray-600 focus:border-blue-500'
+                      : 'bg-white border-gray-300 focus:border-blue-500'
+                      } outline-none transition-colors resize-none`}
                     placeholder="Your message..."
                   />
                 </div>
-                <Button 
+                <Button
                   onClick={handleSubmit}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90" 
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90"
                   size="lg"
                 >
                   <Send className="h-5 w-5 mr-2" />
@@ -614,34 +671,33 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className={`py-8 px-6 border-t ${
-        theme === 'dark' ? 'border-gray-800' : 'border-gray-200'
-      }`}>
+      <footer className={`py-8 px-6 border-t ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'
+        }`}>
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
-              © 2024 Sayar Ahmad Malik. All rights reserved.
+              © 2026 Sayar Ahmad Malik. All rights reserved.
             </p>
             <div className="flex gap-4">
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="hover:text-blue-500 transition-colors"
                 onClick={() => window.open('https://github.com/maliksayar', '_blank')}
               >
                 <Github className="h-5 w-5" />
               </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="hover:text-blue-500 transition-colors"
                 onClick={() => window.open('https://www.linkedin.com/in/sayar-malik-8a065b343/', '_blank')}
               >
                 <Linkedin className="h-5 w-5" />
               </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="hover:text-blue-500 transition-colors"
                 onClick={() => window.location.href = 'mailto:maliksyr999@gmail.com'}
               >
